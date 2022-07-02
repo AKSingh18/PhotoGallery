@@ -115,7 +115,17 @@ public class PollServiceUtils
             Resources resources = context.getResources();
 
             Intent i = PhotoGalleryActivity.newIntent(context);
-            PendingIntent pi = PendingIntent.getActivity(context, 0, i, 0);
+            PendingIntent pi;
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            {
+                pi = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_IMMUTABLE);
+            }
+            else
+            {
+                pi = PendingIntent.getActivity(context, 0, i, 0);
+            }
+
 
             Notification notification = new NotificationCompat.Builder(context, NEW_RESULT_CHANNEL)
                     .setTicker(resources.getString(R.string.new_pictures_text))
